@@ -2,9 +2,9 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "../App.tsx";
 import LearnMore from "../pages/LearnMore.tsx";
 import Landing from "../pages/Landing.tsx";
-import { Home } from "lucide-react";
 import Posts from "../pages/Posts.tsx";
 import Post from "../pages/Post.tsx";
+import ErrorBoundary from "@/pages/ErrorBoundary.tsx";
 
 const router = createBrowserRouter([
   {
@@ -20,10 +20,6 @@ const router = createBrowserRouter([
         element: <LearnMore />,
       },
       {
-        path: "/home",
-        element: <Home />,
-      },
-      {
         path: "/posts",
         element: <Posts />,
       },
@@ -35,7 +31,7 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <div>404 Not Found</div>,
+    element: <ErrorBoundary />,
   },
 ]);
 

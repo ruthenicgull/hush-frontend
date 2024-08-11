@@ -1,10 +1,11 @@
 import PostCard from "@/components/blocks/PostCard";
-import SearchBar from "@/components/blocks/SearchBar";
 import BackgroundGradient from "@/components/ui/backgroundGradient";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 type Post = {
+  _id: string;
   college: {
     name: string;
   };
@@ -25,7 +26,6 @@ function Posts() {
         const response = await axios.get(
           "http://localhost:8000/api/v1/post/paginated-feed"
         );
-        console.log(response.data.data.feedPosts);
         setPosts(response.data.data.feedPosts);
       } catch (error) {
         console.log(error);
@@ -37,17 +37,17 @@ function Posts() {
   return (
     <div className="mx-auto pt-24 p-4 max-w-screen-2xl dark:bg-gray-900 dark:backdrop-blur-3xl">
       <BackgroundGradient />
-      <SearchBar />
       <div className="w-fit mx-auto grid grid-cols-1">
-        {posts.map((post, index) => (
-          <PostCard
-            key={index}
-            _id={post._id}
-            college={post.college.name}
-            username={post.owner.username}
-            title={post.title}
-            content={post.content}
-          />
+        {posts.map((post) => (
+          <Link key={post._id} to={`/posts/${post._id}`}>
+            <PostCard
+              _id={post._id}
+              college={post.college.name}
+              username={post.owner.username}
+              title={post.title}
+              content={post.content}
+            />
+          </Link>
         ))}
       </div>
     </div>

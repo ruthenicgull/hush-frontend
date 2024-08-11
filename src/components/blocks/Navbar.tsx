@@ -11,9 +11,9 @@ import { Link } from "react-router-dom";
 import AuthDialogs from "./AuthDialogs";
 
 const navigation: { name: string; href: string }[] = [
-  { name: "Colleges", href: "#" },
-  { name: "Posts", href: "#" },
-  { name: "Search", href: "#" },
+  { name: "Colleges", href: "/colleges" },
+  { name: "Posts", href: "/posts" },
+  { name: "Search", href: "/search" },
 ];
 
 function Navbar() {
@@ -26,11 +26,11 @@ function Navbar() {
         className="flex items-center justify-between p-6 lg:px-8"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
+          <Link to="/" className="-m-1.5 p-1.5">
             <span className="font-bold text-indigo-500 dark:text-indigo-300 text-lg">
               Hush
             </span>
-          </a>
+          </Link>
         </div>
         <div className="flex lg:hidden">
           <button
@@ -44,13 +44,13 @@ function Navbar() {
         </div>
         <nav className="hidden lg:flex lg:gap-x-12">
           {navigation.map((item) => (
-            <a
+            <Link
               key={item.name}
-              href={item.href}
+              to={item.href}
               className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100"
             >
               {item.name}
-            </a>
+            </Link>
           ))}
         </nav>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-4 lg:items-center">

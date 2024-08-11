@@ -1,20 +1,61 @@
 import { ArrowLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import BackgroundGradient from "@/components/ui/backgroundGradient";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-const post = {
-  college: "Institute of Example",
-  username: "jargo",
-  title: "Unlocking the Power of Silent Moments",
-  content:
-    "Embracing quiet time can significantly enhance our productivity and overall well-being. Here’s how: ",
+type Post = {
+  title: string;
+  college: string;
+  username: string;
+  content: string;
 };
 
 function Post() {
+  const { postId } = useParams();
   const navigate = useNavigate();
+  const [post, setPost] = useState<Post | null>(null); // Initialize with null
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState<string | null>(null); // Error state
+
+  useEffect(() => {
+    async function getPost() {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/api/v1/post/${postId}`
+        );
+        console.log(response.data.data);
+
+        setPost({
+          title: response.data.data.title,
+          college: response.data.data.college.name,
+          username: response.data.data.owner.username,
+          content: response.data.data.content,
+        });
+      } catch (error) {
+        setError("Failed to load post");
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    getPost();
+  }, [postId]);
+
+  if (loading) {
+    return <div className="pt-24 mx-auto max-w-screen-lg">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="pt-24 mx-auto max-w-screen-lg">{error}</div>;
+  }
+
+  if (!post) {
+    return <div className="pt-24 mx-auto max-w-screen-lg">No post found.</div>;
+  }
 
   return (
-    <div className="pt-24 mx-auto max-w-screen-lg backdrop-blur-3xl">
+    <div className="pt-24 mx-auto max-w-screen-lg backdrop-blur-3xl p-4">
       <BackgroundGradient />
       <div className="p-4 flex flex-col gap-4 bg-gray-500 bg-opacity-15 rounded-lg">
         <button
