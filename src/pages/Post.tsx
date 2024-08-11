@@ -42,6 +42,15 @@ function Post() {
     getPost();
   }, [postId]);
 
+  function onBackButtonClick() {
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      // Handle case where there's no previous page
+      navigate("/");
+    }
+  }
+
   if (loading) {
     return <div className="pt-24 mx-auto max-w-screen-lg">Loading...</div>;
   }
@@ -59,7 +68,7 @@ function Post() {
       <BackgroundGradient />
       <div className="p-4 flex flex-col gap-4 bg-gray-500 bg-opacity-15 rounded-lg">
         <button
-          onClick={() => navigate(-1)}
+          onClick={onBackButtonClick}
           className="w-fit p-2 border border-gray-400 rounded-full dark:text-white"
         >
           <ArrowLeft />

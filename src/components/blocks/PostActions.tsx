@@ -1,24 +1,25 @@
 import { ArrowUp, ArrowDown, MessageSquare, Share2 } from "lucide-react";
+import { toast } from "sonner";
 
 interface PostActionsProps {
+  _id: string;
   upvotes: number;
   comments: number;
   vote: "upvote" | "downvote" | "none";
-  onUpvote?: () => void;
-  onDownvote?: () => void;
-  onComment?: () => void;
-  onShare?: () => void;
 }
 
-function PostActions({
-  upvotes,
-  comments,
-  vote,
-  onUpvote,
-  onDownvote,
-  onComment,
-  onShare,
-}: PostActionsProps) {
+function PostActions({ _id, upvotes, comments, vote }: PostActionsProps) {
+  function onUpvote() {}
+
+  function onDownvote() {}
+
+  function onComment() {}
+
+  function onShare() {
+    navigator.clipboard.writeText(`localhost:5173/posts/${_id}`);
+    toast("Share Link copied to clipboard");
+  }
+
   return (
     <div className="flex items-center space-x-4 text-xs">
       <button

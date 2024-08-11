@@ -2,7 +2,6 @@ import PostCard from "@/components/blocks/PostCard";
 import BackgroundGradient from "@/components/ui/backgroundGradient";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 type Post = {
   _id: string;
@@ -39,15 +38,13 @@ function Posts() {
       <BackgroundGradient />
       <div className="w-fit mx-auto grid grid-cols-1">
         {posts.map((post) => (
-          <Link key={post._id} to={`/posts/${post._id}`}>
-            <PostCard
-              _id={post._id}
-              college={post.college.name}
-              username={post.owner.username}
-              title={post.title}
-              content={post.content}
-            />
-          </Link>
+          <PostCard
+            _id={post._id}
+            college={post.college.name}
+            username={post.owner.username}
+            title={post.title}
+            content={post.content}
+          />
         ))}
       </div>
     </div>
