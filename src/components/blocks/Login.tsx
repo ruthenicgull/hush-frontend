@@ -59,12 +59,6 @@ function Login({ onClose }: Props) {
               >
                 Login
               </Button>
-              <Button
-                variant="outline"
-                className="w-full dark:border-gray-600 dark:text-gray-300"
-              >
-                Login with Google
-              </Button>
             </div>
             <div className="mt-4 text-center text-sm dark:text-gray-400">
               Don&apos;t have an account?{" "}
