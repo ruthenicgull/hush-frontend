@@ -3,6 +3,8 @@ import BackgroundGradient from "@/components/ui/backgroundGradient";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 type Post = {
   _id: string;
   college: {
@@ -13,6 +15,7 @@ type Post = {
   };
   title: string;
   content: string;
+  votes: number;
 };
 
 function Posts() {
@@ -23,9 +26,10 @@ function Posts() {
     async function getPosts() {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/v1/post/paginated-feed"
+          `${apiUrl}/api/v1/post/paginated-feed`
         );
-        setPosts(response.data.data.feedPosts);
+        const feedPosts = response.data.data.feedPosts;
+        setPosts(feedPosts);
       } catch (error) {
         console.log(error);
       }
@@ -39,11 +43,13 @@ function Posts() {
       <div className="w-fit mx-auto grid grid-cols-1">
         {posts.map((post) => (
           <PostCard
+            key={post._id}
             _id={post._id}
             college={post.college.name}
             username={post.owner.username}
             title={post.title}
             content={post.content}
+            votes={post.votes}
           />
         ))}
       </div>

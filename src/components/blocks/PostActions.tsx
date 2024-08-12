@@ -1,23 +1,110 @@
 import { ArrowUp, ArrowDown, MessageSquare, Share2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import axios from "axios";
+import { Vote, Comment } from "@/types";
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 interface PostActionsProps {
-  _id: string;
-  upvotes: number;
-  comments: number;
-  vote: "upvote" | "downvote" | "none";
+  postId: string;
+  votes: number;
 }
 
-function PostActions({ _id, upvotes, comments, vote }: PostActionsProps) {
-  function onUpvote() {}
+function PostActions({ postId, votes }: PostActionsProps) {
+  const [voteType, setVoteType] = useState<Vote>("none");
+  const [upvotes, setUpvotes] = useState(votes); // Initialize with the votes prop
+  const [comments, setComments] = useState<Comment[]>([]);
 
-  function onDownvote() {}
+  useEffect(() => {
+    // Fetch initial comment count from the server
+    async function fetchData() {
+      try {
+        const postComments = await axios.get(
+          `${apiUrl}/api/v1/comments/post/${postId}`
+        );
+        console.log(postComments);
 
-  function onComment() {}
+        setComments(postComments.data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+    fetchData();
+  }, [postId]);
+
+  async function onUpvote() {
+    const newVoteType = voteType === "upvote" ? "none" : "upvote";
+    const voteChange =
+      voteType === "upvote" ? -1 : voteType === "downvote" ? 2 : 1;
+
+    try {
+      const endpoint = `${apiUrl}/api/v1/vote/post/${postId}`;
+      let response;
+      if (newVoteType === "none") {
+        response = await axios.delete(endpoint, { withCredentials: true });
+      } else {
+        response = await axios.post(
+          endpoint,
+          { type: newVoteType },
+          { withCredentials: true }
+        );
+      }
+
+      // Only update local state if the request is successful
+      if (response.status === 200) {
+        setUpvotes(upvotes + voteChange);
+        setVoteType(newVoteType);
+        toast("Vote updated successfully");
+      } else {
+        throw new Error("Failed to update vote");
+      }
+    } catch (error) {
+      console.error("Error updating vote:", error);
+      toast.error("Login to vote");
+    }
+  }
+
+  async function onDownvote() {
+    const newVoteType = voteType === "downvote" ? "none" : "downvote";
+    const voteChange =
+      voteType === "downvote" ? 1 : voteType === "upvote" ? -2 : -1;
+
+    try {
+      const endpoint = `${apiUrl}/api/v1/vote/post/${postId}`;
+      let response;
+      if (newVoteType === "none") {
+        response = await axios.delete(endpoint, { withCredentials: true });
+      } else {
+        response = await axios.post(
+          endpoint,
+          { type: newVoteType },
+          { withCredentials: true }
+        );
+      }
+
+      // Only update local state if the request is successful
+      if (response.status === 200) {
+        setUpvotes(upvotes + voteChange);
+        setVoteType(newVoteType);
+        toast("Vote updated successfully");
+      } else {
+        throw new Error("Failed to update vote");
+      }
+    } catch (error) {
+      console.error("Error updating vote:", error);
+      toast.error("Login to vote");
+    }
+  }
+
+  function onComment() {
+    // Implement comment functionality here
+    console.log("Comment clicked");
+  }
 
   function onShare() {
-    navigator.clipboard.writeText(`localhost:5173/posts/${_id}`);
-    toast("Share Link copied to clipboard");
+    navigator.clipboard.writeText(`localhost:5173/posts/${postId}`);
+    toast("Share link copied to clipboard");
   }
 
   return (
@@ -28,7 +115,9 @@ function PostActions({ _id, upvotes, comments, vote }: PostActionsProps) {
       >
         <ArrowUp
           strokeWidth={5}
-          className={`w-4 h-4 mr-1 ${vote === "upvote" && "text-indigo-500"}`}
+          className={`w-4 h-4 mr-1 ${
+            voteType === "upvote" && "text-indigo-500"
+          }`}
         />
       </button>
       <span className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white">
@@ -40,7 +129,9 @@ function PostActions({ _id, upvotes, comments, vote }: PostActionsProps) {
       >
         <ArrowDown
           strokeWidth={5}
-          className={`w-4 h-4 mr-1 ${vote === "downvote" && "text-indigo-500"}`}
+          className={`w-4 h-4 mr-1 ${
+            voteType === "downvote" && "text-indigo-500"
+          }`}
         />
       </button>
       <button
@@ -48,7 +139,7 @@ function PostActions({ _id, upvotes, comments, vote }: PostActionsProps) {
         onClick={onComment}
       >
         <MessageSquare className="w-4 h-4 mr-1" />
-        <span>{comments}</span>
+        <span>{comments.length}</span>
       </button>
       <button
         className="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white"
