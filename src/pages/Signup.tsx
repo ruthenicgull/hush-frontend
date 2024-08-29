@@ -5,14 +5,10 @@ import { apiUrl } from "@/constants";
 import { Loader } from "@/components/ui/Loader";
 import { VerificationPage } from "@/pages/VerificationPage";
 import { SignUpForm } from "@/components/blocks/SignUpForm";
-
-type FormData = {
-  email: string;
-  password: string;
-};
+import { AuthFormDataType } from "@/types";
 
 function SignUp() {
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<AuthFormDataType>({
     email: "",
     password: "",
   });

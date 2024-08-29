@@ -4,3 +4,7 @@ export type Comment = {
   username: string;
   content: string;
 };
+export type AuthFormDataType = {
+  email: string;
+  password: string;
+};
