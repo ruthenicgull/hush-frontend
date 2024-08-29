@@ -5,25 +5,25 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Menu, Newspaper, School, Search } from "lucide-react";
 import { ModeToggle } from "../theme/mode-toggle";
 import { Link } from "react-router-dom";
-import AuthDialogs from "./AuthDialogs";
+import { Button } from "../ui/button";
 
-const navigation: { name: string; href: string }[] = [
-  { name: "Colleges", href: "/colleges" },
-  { name: "Posts", href: "/posts" },
-  { name: "Search", href: "/search" },
+const navigation: { name: string; href: string; icon: any }[] = [
+  { name: "Colleges", href: "/colleges", icon: <School size={18} /> },
+  { name: "Posts", href: "/posts", icon: <Newspaper size={18} /> },
+  { name: "Search", href: "/search", icon: <Search size={18} /> },
 ];
 
 function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 backdrop-blur-sm">
+    <header className="fixed inset-x-0 top-0 z-50 bg-white bg-opacity-15 dark:bg-black dark:bg-opacity-5 backdrop-blur-sm">
       <nav
         aria-label="Global"
-        className="flex items-center justify-between p-6 lg:px-8"
+        className="flex items-center justify-between px-8 py-3"
       >
         <div className="flex lg:flex-1">
           <Link to="/" className="-m-1.5 p-1.5">
@@ -47,15 +47,25 @@ function Navbar() {
             <Link
               key={item.name}
               to={item.href}
-              className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100"
+              className="flex items-center gap-2 text-sm rounded-sm tracking-widest leading-6 text-gray-900 transition duration-200 px-2 hover:bg-black hover:text-white dark:text-gray-100 dark:hover:bg-white dark:hover:text-black"
             >
-              {item.name}
+              <span>{item.icon}</span>
+              <span>{item.name}</span>
             </Link>
           ))}
         </nav>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-4 lg:items-center">
           <ModeToggle />
-          <AuthDialogs />
+          <Link to={"/login"}>
+            <Button variant={"outline"} className="bg-none">
+              Login
+            </Button>
+          </Link>
+          <Link to={"/signup"}>
+            <Button className="bg-indigo-500 hover:bg-indigo-600">
+              Sign Up
+            </Button>
+          </Link>
         </div>
       </nav>
       {/* Sidebar */}
@@ -78,14 +88,22 @@ function Navbar() {
                   <a
                     key={item.name}
                     href={item.href}
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800"
+                    className="-mx-3 flex gap-2 items-center rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800"
                   >
-                    {item.name}
+                    <span>{item.icon}</span>
+                    <span>{item.name}</span>
                   </a>
                 ))}
               </div>
-              <div className="py-6">
-                <AuthDialogs />
+              <div className="py-6 flex flex-col gap-4">
+                <Link to={"/login"}>
+                  <Button variant={"outline"} className="w-full">
+                    Login
+                  </Button>
+                </Link>
+                <Link to={"/signup"}>
+                  <Button className="w-full">Sign Up</Button>
+                </Link>
               </div>
             </div>
           </div>

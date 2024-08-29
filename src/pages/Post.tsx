@@ -64,7 +64,7 @@ function Post() {
   }
 
   return (
-    <div className="pt-24 mx-auto max-w-screen-lg backdrop-blur-3xl p-4">
+    <div className="pt-24 mx-auto max-w-screen-md backdrop-blur-3xl p-4">
       <BackgroundGradient />
       <div className="p-4 flex flex-col gap-4 bg-gray-500 bg-opacity-15 rounded-lg">
         <button

@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import axios from "axios";
 import { Vote, Comment } from "@/types";
-
-const apiUrl = import.meta.env.VITE_API_URL;
+import { apiUrl } from "@/constants";
 
 interface PostActionsProps {
   postId: string;

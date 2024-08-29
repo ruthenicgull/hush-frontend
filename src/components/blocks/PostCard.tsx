@@ -32,7 +32,7 @@ function PostCard({ _id, college, username, title, content, votes }: Props) {
             {content.length > 100 ? content.slice(0, 100) + "..." : content}
           </p>
         </div>
-        <div className="flex justify-between flex-wrap">
+        <div className="flex justify-between flex-wrap pt-2">
           <PostActions postId={_id} votes={votes} />
           <Link
             to={`/posts/${_id}`}
