@@ -28,8 +28,10 @@ function SignUp() {
     setVerificationCode(event.target.value);
   }
 
-  async function onSubmitButtonClick(
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  async function onFormSubmit(
+    event:
+      | React.FormEvent<HTMLFormElement>
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) {
     event.preventDefault();
     setIsLoading(true);
@@ -90,7 +92,7 @@ function SignUp() {
       ) : !isVerificationSent ? (
         <SignUpForm
           onFormChange={onFormChange}
-          onSubmitButtonClick={onSubmitButtonClick}
+          onFormSubmit={onFormSubmit}
           error={error}
         />
       ) : !isVerified ? (
