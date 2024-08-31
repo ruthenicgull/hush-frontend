@@ -8,6 +8,7 @@ import { AuthFormDataType } from "@/types";
 import { Loader } from "@/components/ui/Loader";
 import { LoginForm } from "@/components/blocks/LoginForm";
 import { WelcomeMessage } from "@/components/blocks/WelcomeMessage";
+import BackgroundGradient from "@/components/ui/backgroundGradient"; // Import the gradient
 
 function Login() {
   const [formData, setFormData] = useState<AuthFormDataType>({
@@ -65,22 +66,25 @@ function Login() {
   }
 
   return (
-    <div className="mx-auto w-screen h-screen flex flex-col justify-center items-center p-6 bg-white dark:bg-black">
-      {isLoading ? (
-        <Loader
-          message="Please wait..."
-          subMessage="We're processing your request"
-        />
-      ) : !isLoggedIn ? (
-        <LoginForm
-          formData={formData}
-          onFormChange={onFormChange}
-          onFormSubmit={onFormSubmit}
-          error={error}
-        />
-      ) : (
-        <WelcomeMessage />
-      )}
+    <div className="relative isolate bg-white dark:bg-gray-900 h-screen">
+      <BackgroundGradient />
+      <div className="relative z-10 flex flex-col justify-center items-center p-6 h-full">
+        {isLoading ? (
+          <Loader
+            message="Please wait..."
+            subMessage="We're processing your request"
+          />
+        ) : !isLoggedIn ? (
+          <LoginForm
+            formData={formData}
+            onFormChange={onFormChange}
+            onFormSubmit={onFormSubmit}
+            error={error}
+          />
+        ) : (
+          <WelcomeMessage />
+        )}
+      </div>
     </div>
   );
 }
