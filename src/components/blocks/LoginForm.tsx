@@ -22,7 +22,7 @@ export function LoginForm({
   error,
 }: LoginFormProps) {
   return (
-    <div className="flex items-center justify-center bg-neutral-500 bg-opacity-20 p-8 rounded-lg shadow-lg">
+    <div className="flex items-center justify-center bg-neutral-500 bg-opacity-20 dark:bg-black dark:bg-opacity-30 p-8 rounded-lg shadow-lg">
       <div className="mx-auto grid w-full gap-6">
         <div className="grid gap-2 text-center">
           <h1 className="text-3xl font-bold dark:text-white">Login</h1>
@@ -31,7 +31,7 @@ export function LoginForm({
           </p>
           {error && <p className="text-red-500">{error}</p>}
         </div>
-        <div className="grid gap-4">
+        <form className="grid gap-4" onSubmit={onFormSubmit}>
           <div className="grid gap-2">
             <Label htmlFor="email" className="dark:text-gray-300">
               Email
@@ -73,7 +73,7 @@ export function LoginForm({
           >
             Login
           </Button>
-        </div>
+        </form>
         <div className="mt-4 text-center text-sm dark:text-gray-400">
           Don&apos;t have an account?{" "}
           <Link to="/signup" className="underline dark:text-gray-300">

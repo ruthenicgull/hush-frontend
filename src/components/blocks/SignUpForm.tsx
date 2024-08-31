@@ -18,7 +18,7 @@ export function SignUpForm({
   error,
 }: SignUpFormProps) {
   return (
-    <div className="flex items-center justify-center bg-neutral-500 bg-opacity-20 p-8 rounded-lg shadow-lg">
+    <div className="flex items-center justify-center bg-neutral-500 bg-opacity-20 dark:bg-black dark:bg-opacity-30 p-8 rounded-lg shadow-lg">
       <div className="mx-auto grid w-full gap-6">
         <div className="grid gap-2 text-center">
           <h1 className="text-3xl font-bold dark:text-white">Sign Up</h1>
