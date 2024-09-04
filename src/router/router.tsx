@@ -7,6 +7,7 @@ import Post from "../pages/Post.tsx";
 import ErrorBoundary from "@/pages/ErrorBoundary.tsx";
 import Login from "@/pages/Login.tsx";
 import SignUp from "@/pages/Signup.tsx";
+import ProfilePage from "@/pages/ProfilePage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -38,8 +39,12 @@ const router = createBrowserRouter([
         element: <SignUp />,
       },
       {
+        path: "/profile/:user_id",
+        element: <ProfilePage />,
+      },
+      {
         path: "/test",
-        element: <div />,
+        element: <ProfilePage />,
       },
     ],
   },

@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { apiUrl } from "@/constants";
 import { userSlice } from "@/features/user/userSlice";
-import { RootState } from "@/app/store";
 import { AuthFormDataType } from "@/types";
 import { Loader } from "@/components/ui/Loader";
 import { LoginForm } from "@/components/blocks/LoginForm";
 import { WelcomeMessage } from "@/components/blocks/WelcomeMessage";
 import BackgroundGradient from "@/components/ui/backgroundGradient"; // Import the gradient
+import { RootState } from "@/app/store";
+import { Link } from "react-router-dom";
 
 function Login() {
   const [formData, setFormData] = useState<AuthFormDataType>({
@@ -44,8 +45,8 @@ function Login() {
       dispatch(
         userSlice.actions.setUser({
           data: response.data.data.user,
-          accessToken: response.data.accessToken,
-          refreshToken: response.data.refreshToken,
+          accessToken: response.data.data.accessToken,
+          refreshToken: response.data.data.refreshToken,
         })
       );
 
@@ -82,7 +83,10 @@ function Login() {
             error={error}
           />
         ) : (
-          <WelcomeMessage />
+          <>
+            <WelcomeMessage />
+            <Link to={"/profile/66d02f4eda0d1c8b95d46ab2"}>here</Link>
+          </>
         )}
       </div>
     </div>
