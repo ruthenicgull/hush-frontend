@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import { apiUrl } from "@/constants";
 import { Loader } from "@/components/ui/Loader";
 import { VerificationPage } from "@/pages/VerificationPage";
 import { SignUpForm } from "@/components/blocks/SignUpForm";
@@ -39,7 +38,7 @@ function SignUp() {
     setError(null);
 
     try {
-      await axios.post(`${apiUrl}/user/register`, formData);
+      await axios.post(`user/register`, formData);
       setIsVerificationSent(true);
     } catch (error: any) {
       console.log(error);
@@ -67,7 +66,7 @@ function SignUp() {
 
     try {
       const response = await axios.get(
-        `${apiUrl}/user/verify-email?code=${verificationCode}`,
+        `user/verify-email?code=${verificationCode}`,
         { params: { email: formData.email } }
       );
 

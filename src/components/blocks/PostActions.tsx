@@ -1,9 +1,8 @@
 import { ArrowUp, ArrowDown, MessageSquare, Share2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import axios from "axios";
+import axios from "@/api/axios";
 import { Vote, Comment } from "@/types";
-import { apiUrl } from "@/constants";
 
 interface PostActionsProps {
   postId: string;
@@ -19,9 +18,7 @@ function PostActions({ postId, votes }: PostActionsProps) {
     // Fetch initial comment count from the server
     async function fetchData() {
       try {
-        const postComments = await axios.get(
-          `${apiUrl}/api/v1/comments/post/${postId}`
-        );
+        const postComments = await axios.get(`comments/post/${postId}`);
         console.log(postComments);
 
         setComments(postComments.data.data);
@@ -38,7 +35,7 @@ function PostActions({ postId, votes }: PostActionsProps) {
       voteType === "upvote" ? -1 : voteType === "downvote" ? 2 : 1;
 
     try {
-      const endpoint = `${apiUrl}/api/v1/vote/post/${postId}`;
+      const endpoint = `vote/post/${postId}`;
       let response;
       if (newVoteType === "none") {
         response = await axios.delete(endpoint, { withCredentials: true });
@@ -70,7 +67,7 @@ function PostActions({ postId, votes }: PostActionsProps) {
       voteType === "downvote" ? 1 : voteType === "upvote" ? -2 : -1;
 
     try {
-      const endpoint = `${apiUrl}/api/v1/vote/post/${postId}`;
+      const endpoint = `vote/post/${postId}`;
       let response;
       if (newVoteType === "none") {
         response = await axios.delete(endpoint, { withCredentials: true });

@@ -2,7 +2,6 @@ import PostCard from "@/components/blocks/PostCard";
 import BackgroundGradient from "@/components/ui/backgroundGradient";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { apiUrl } from "@/constants";
 
 type Post = {
   _id: string;
@@ -24,7 +23,7 @@ function Posts() {
   useEffect(() => {
     async function getPosts() {
       try {
-        const response = await axios.get(`${apiUrl}/post/paginated-feed`);
+        const response = await axios.get(`post/paginated-feed`);
         const feedPosts = response.data.data.feedPosts;
         setPosts(feedPosts);
       } catch (error) {

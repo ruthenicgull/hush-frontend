@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { apiUrl } from "@/constants";
+import axios from "@/api/axios";
 import { userSlice } from "@/features/user/userSlice";
 import { AuthFormDataType } from "@/types";
 import { Loader } from "@/components/ui/Loader";
@@ -41,15 +40,14 @@ function Login() {
     setError(null);
 
     try {
-      const response = await axios.post(`${apiUrl}/user/login`, formData);
+      const response = await axios.post(`/user/login`, formData);
       dispatch(
         userSlice.actions.setUser({
-          data: response.data.data.user,
-          accessToken: response.data.data.accessToken,
-          refreshToken: response.data.data.refreshToken,
+          user_id: response?.data?.data?.user?._id,
+          accessToken: response?.data?.data?.accessToken,
+          refreshToken: response?.data?.data?.refreshToken,
         })
       );
-
       setIsLoggedIn(true);
     } catch (error: any) {
       if (
