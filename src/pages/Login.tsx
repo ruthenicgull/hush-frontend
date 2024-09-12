@@ -1,70 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "@/api/axios";
-import { userSlice } from "@/features/user/userSlice";
-import { AuthFormDataType } from "@/types";
 import { Loader } from "@/components/ui/Loader";
 import { LoginForm } from "@/components/blocks/LoginForm";
 import { WelcomeMessage } from "@/components/blocks/WelcomeMessage";
 import BackgroundGradient from "@/components/ui/backgroundGradient"; // Import the gradient
-import { RootState } from "@/app/store";
+import useLogin from "@/hooks/useLogin";
 import { Link } from "react-router-dom";
+import { RootState } from "@/app/store";
+import { useSelector } from "react-redux";
 
 function Login() {
-  const [formData, setFormData] = useState<AuthFormDataType>({
-    email: "",
-    password: "",
-  });
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const dispatch = useDispatch();
+  const { formData, isLoading, isLoggedIn, error, onFormChange, onFormSubmit } =
+    useLogin();
   const user = useSelector((state: RootState) => state.user);
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
-  function onFormChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setFormData({ ...formData, [event.target.id]: event.target.value });
-  }
-
-  async function onFormSubmit(
-    event:
-      | React.FormEvent<HTMLFormElement>
-      | React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) {
-    event.preventDefault();
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const response = await axios.post(`/user/login`, formData, {
-        withCredentials: true,
-      });
-      dispatch(
-        userSlice.actions.setUser({
-          user_id: response?.data?.data?.user?._id,
-          accessToken: response?.data?.data?.accessToken,
-          refreshToken: response?.data?.data?.refreshToken,
-        })
-      );
-      setIsLoggedIn(true);
-    } catch (error: any) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        setError(error.response.data.message);
-      } else {
-        setError("An unexpected error occurred. Please try again.");
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  }
 
   return (
     <div className="relative isolate bg-white dark:bg-gray-900 h-screen">
@@ -85,7 +31,7 @@ function Login() {
         ) : (
           <>
             <WelcomeMessage />
-            <Link to={"/profile/66d02f4eda0d1c8b95d46ab2"}>here</Link>
+            <Link to={`/profile/${user.user_id}`}>Go to Profile</Link>
           </>
         )}
       </div>
