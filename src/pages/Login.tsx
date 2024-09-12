@@ -40,7 +40,9 @@ function Login() {
     setError(null);
 
     try {
-      const response = await axios.post(`/user/login`, formData);
+      const response = await axios.post(`/user/login`, formData, {
+        withCredentials: true,
+      });
       dispatch(
         userSlice.actions.setUser({
           user_id: response?.data?.data?.user?._id,

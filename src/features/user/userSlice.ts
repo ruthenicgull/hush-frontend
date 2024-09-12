@@ -1,17 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { User } from "@/types";
 
 // Define a type for the slice state
 export interface UserState {
-  data: User | null;
+  user_id: string | null;
   accessToken: string | null;
   refreshToken: string | null;
 }
 
 // Define the initial state using that type
 const initialState: UserState = {
-  data: null,
+  user_id: null,
   accessToken: null,
   refreshToken: null,
 };
@@ -23,9 +22,15 @@ export const userSlice = createSlice({
   reducers: {
     // Use the PayloadAction type to declare the contents of `action.payload`
     setUser: (state, action: PayloadAction<UserState>) => {
-      state.data = action.payload.data;
+      state.user_id = action.payload.user_id;
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
+    },
+
+    logoutUser: (state) => {
+      state.user_id = null;
+      state.accessToken = null;
+      state.refreshToken = null;
     },
   },
 });
