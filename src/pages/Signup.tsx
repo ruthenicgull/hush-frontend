@@ -3,7 +3,7 @@ import { Loader } from "@/components/ui/Loader";
 import { VerificationPage } from "@/pages/VerificationPage";
 import { SignUpForm } from "@/components/blocks/SignUpForm";
 import BackgroundGradient from "@/components/ui/backgroundGradient"; // Import the gradient
-import useSignUp from "@/hooks/useSignUp";
+import useSignup from "@/hooks/useSignup";
 
 function SignUp() {
   const {
@@ -17,7 +17,7 @@ function SignUp() {
     onVerificationCodeChange,
     onFormSubmit,
     onVerifyCodeClick,
-  } = useSignUp();
+  } = useSignup();
 
   return (
     <div className="relative isolate bg-white dark:bg-gray-900 h-screen">
