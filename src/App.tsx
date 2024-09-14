@@ -2,18 +2,28 @@ import { Outlet } from "react-router-dom";
 import Navbar from "./components/blocks/Navbar";
 import useRefreshToken from "./hooks/useRefresh";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "./app/store";
+import { selectIsAuthenticated } from "./features/user/userSlice";
+
+type ContextType = { isUserLoggedIn: boolean };
 
 function App() {
   const refresh = useRefreshToken();
+  const isAuthenticated = useSelector((state: RootState) =>
+    selectIsAuthenticated(state)
+  );
 
   useEffect(() => {
     refresh();
-  }, [refresh]); // Refresh token every time the component re-renders
+  }, []);
 
   return (
-    <div className=" dark:bg-gray-900">
+    <div className="dark:bg-gray-900">
       <Navbar />
-      <Outlet />
+      <Outlet
+        context={{ isUserLoggedIn: isAuthenticated } satisfies ContextType}
+      />
     </div>
   );
 }

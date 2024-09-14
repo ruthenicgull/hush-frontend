@@ -9,6 +9,11 @@ import { Menu, Newspaper, School, Search } from "lucide-react";
 import { ModeToggle } from "../theme/mode-toggle";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store";
+import { selectIsAuthenticated } from "@/features/user/userSlice";
+import useLogout from "@/hooks/useLogout";
 
 const navigation: { name: string; href: string; icon: any }[] = [
   { name: "Colleges", href: "/colleges", icon: <School size={18} /> },
@@ -18,6 +23,14 @@ const navigation: { name: string; href: string; icon: any }[] = [
 
 function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const isUserLoggedIn = useSelector((state: RootState) =>
+    selectIsAuthenticated(state)
+  );
+  const [logout, error] = useLogout();
+
+  const handleLinkClick = () => {
+    setMobileMenuOpen(false);
+  };
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-white bg-opacity-15 dark:bg-black dark:bg-opacity-5 backdrop-blur-sm">
@@ -56,21 +69,38 @@ function Navbar() {
         </nav>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-4 lg:items-center">
           <ModeToggle />
-          <Link to={"/login"}>
-            <Button variant={"outline"} className="bg-none">
-              Login
-            </Button>
-          </Link>
-          <Link to={"/signup"}>
-            <Button className="bg-indigo-500 hover:bg-indigo-600">
-              Sign Up
-            </Button>
-          </Link>
+          {isUserLoggedIn ? (
+            <div className="flex gap-2">
+              <Avatar>
+                <AvatarImage
+                  src="https://github.com/shadcn.png"
+                  alt="User Avatar"
+                />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <Button onClick={logout} variant={"destructive"}>
+                Logout
+              </Button>
+            </div>
+          ) : (
+            <div className="flex gap-2">
+              <Link to={"/login"}>
+                <Button variant={"outline"} className="bg-none">
+                  Login
+                </Button>
+              </Link>
+              <Link to={"/signup"}>
+                <Button className="bg-indigo-500 hover:bg-indigo-600">
+                  Sign Up
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
       </nav>
       {/* Sidebar */}
       <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-        <SheetContent>
+        <SheetContent aria-describedby={undefined}>
           <SheetHeader>
             <SheetTitle>
               <div className="flex flex-col gap-4 p-4 -m-4">
@@ -85,25 +115,47 @@ function Navbar() {
             <div className="-my-6 divide-y divide-gray-500/10 dark:divide-gray-700/10">
               <div className="space-y-2 py-6">
                 {navigation.map((item) => (
-                  <a
+                  <Link
                     key={item.name}
-                    href={item.href}
+                    to={item.href}
+                    onClick={handleLinkClick}
                     className="-mx-3 flex gap-2 items-center rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800"
                   >
                     <span>{item.icon}</span>
                     <span>{item.name}</span>
-                  </a>
+                  </Link>
                 ))}
               </div>
               <div className="py-6 flex flex-col gap-4">
-                <Link to={"/login"}>
-                  <Button variant={"outline"} className="w-full">
-                    Login
-                  </Button>
-                </Link>
-                <Link to={"/signup"}>
-                  <Button className="w-full">Sign Up</Button>
-                </Link>
+                {isUserLoggedIn ? (
+                  <div className="flex flex-col items-center gap-4">
+                    <Avatar>
+                      <AvatarImage
+                        src="https://github.com/shadcn.png"
+                        alt="User Avatar"
+                      />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                    <Button
+                      onClick={logout}
+                      variant={"destructive"}
+                      className="w-full"
+                    >
+                      Logout
+                    </Button>
+                  </div>
+                ) : (
+                  <>
+                    <Link to={"/login"} onClick={handleLinkClick}>
+                      <Button variant={"outline"} className="w-full">
+                        Login
+                      </Button>
+                    </Link>
+                    <Link to={"/signup"} onClick={handleLinkClick}>
+                      <Button className="w-full">Sign Up</Button>
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>
