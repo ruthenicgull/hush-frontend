@@ -69,7 +69,7 @@ function Post() {
       <div className="p-4 flex flex-col gap-4 bg-gray-500 bg-opacity-15 rounded-lg">
         <button
           onClick={onBackButtonClick}
-          className="w-fit p-2 border border-gray-400 rounded-full dark:text-white"
+          className="w-fit p-2 text-gray-500 hover:text-black dark:hover:text-white hover:-translate-x-1 duration-150"
         >
           <ArrowLeft />
         </button>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Sheet,
   SheetContent,
@@ -26,14 +26,35 @@ function Navbar() {
   const isUserLoggedIn = useSelector((state: RootState) =>
     selectIsAuthenticated(state)
   );
+  const [blackenStyle, setBlackenStyle] = useState("");
   const [logout, error] = useLogout();
+
+  useEffect(() => {
+    // check if user has scrolled a certain amount
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      if (scrollY > 75) {
+        setBlackenStyle("bg-black");
+      } else {
+        setBlackenStyle("");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  });
 
   const handleLinkClick = () => {
     setMobileMenuOpen(false);
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-white bg-opacity-15 dark:bg-black dark:bg-opacity-5 backdrop-blur-sm">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 bg-opacity-80 backdrop-blur-sm ${blackenStyle}`}
+    >
       <nav
         aria-label="Global"
         className="flex items-center justify-between px-8 py-3"
