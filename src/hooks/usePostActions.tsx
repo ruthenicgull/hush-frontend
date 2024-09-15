@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import axios from "@/api/axios";
-import { Vote, Comment } from "@/types";
+import { VoteType } from "@/types";
 import { useSelector } from "react-redux";
 import { selectIsAuthenticated } from "@/features/user/userSlice";
 import useDebounce from "./useDebounce";
 
 export function usePostActions(postId: string) {
-  const [voteType, setVoteType] = useState<Vote>("none");
+  const [voteType, setVoteType] = useState<VoteType>("none");
   const [upvotes, setUpvotes] = useState<number>(0); // No longer initialized with props, fetched from API
-  const [comments, setComments] = useState<Comment[]>([]);
-  const [pendingVote, setPendingVote] = useState<Vote | null>(null);
+  const [pendingVote, setPendingVote] = useState<VoteType | null>(null);
 
   const isAuthenticated = useSelector(selectIsAuthenticated);
 
@@ -23,10 +22,6 @@ export function usePostActions(postId: string) {
         // Fetch the initial vote count
         const votesResponse = await axios.get(`/vote/post/count/${postId}`);
         setUpvotes(votesResponse.data.data);
-
-        // Fetch comments
-        const postComments = await axios.get(`comments/post/${postId}`);
-        setComments(postComments.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -52,7 +47,7 @@ export function usePostActions(postId: string) {
     }
   }, [debouncedVote]);
 
-  async function handleVote(newVoteType: Vote) {
+  async function handleVote(newVoteType: VoteType) {
     if (!isAuthenticated) {
       toast.error("Login to vote");
       return;
@@ -96,22 +91,16 @@ export function usePostActions(postId: string) {
     setPendingVote(newVoteType); // Set pending vote, debounced execution
   }
 
-  function onComment() {
-    console.log("Comment clicked");
-  }
-
   function onShare() {
     navigator.clipboard.writeText(`localhost:5173/posts/${postId}`);
     toast("Share link copied to clipboard");
   }
 
   return {
-    comments,
     voteType,
     upvotes,
     onUpvote,
     onDownvote,
-    onComment,
     onShare,
   };
 }

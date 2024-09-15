@@ -34,7 +34,7 @@ function Navbar() {
     const handleScroll = () => {
       const scrollY = window.scrollY;
       if (scrollY > 75) {
-        setBlackenStyle("bg-black");
+        setBlackenStyle("bg-white dark:bg-black ");
       } else {
         setBlackenStyle("");
       }

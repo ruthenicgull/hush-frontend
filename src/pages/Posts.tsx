@@ -41,7 +41,7 @@ function Posts() {
   }, []);
 
   return (
-    <div className="mx-auto pt-24 p-4 max-w-screen-2xl dark:bg-gray-900 dark:backdrop-blur-3xl">
+    <div className="mx-auto pt-24 p-4 max-w-screen-2xl  dark:backdrop-blur-3xl">
       <BackgroundGradient />
       {isLoading ? (
         <Loader message="Fetching posts..." />

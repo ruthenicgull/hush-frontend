@@ -1,8 +1,9 @@
-export type Vote = "upvote" | "downvote" | "none";
-export type Comment = {
+export type VoteType = "upvote" | "downvote" | "none";
+export type CommentType = {
   _id: string;
-  username: string;
+  owner: string;
   content: string;
+  votes: number; // initial votes
 };
 export type AuthFormDataType = {
   email: string;

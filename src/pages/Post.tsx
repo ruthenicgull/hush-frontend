@@ -2,6 +2,7 @@ import { ArrowLeft } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import BackgroundGradient from "@/components/ui/backgroundGradient";
 import { useEffect, useState } from "react";
+import CommentsList from "@/components/blocks/CommentsList";
 import axios from "axios";
 
 type Post = {
@@ -86,6 +87,10 @@ function Post() {
           </span>
         </div>
         <p className="dark:text-white whitespace-pre-line">{post.content}</p>
+        <hr className="bg-gray-500 border-none h-[1px]" />
+        <div className="bg-gray-500 bg-opacity-15 py-2 px-4 rounded">
+          <CommentsList post_id={postId || null} />
+        </div>
       </div>
     </div>
   );

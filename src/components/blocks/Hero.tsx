@@ -3,7 +3,7 @@ import BackgroundGradient from "../ui/backgroundGradient";
 
 export default function Hero() {
   return (
-    <div className="bg-white dark:bg-gray-900">
+    <div className="">
       <div className="relative isolate px-6 pt-14 lg:px-8">
         <BackgroundGradient />
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
@@ -21,7 +21,12 @@ export default function Hero() {
           </div>
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-6xl">
-              Share your story. Stay anonymous
+              <p>
+                Share your <span className="text-blue-500">Story</span>.
+              </p>
+              <p>
+                Stay <span className="text-red-500">Anonymous</span>
+              </p>
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
               Unleash your campus tales and connect with others, judgement-free.
