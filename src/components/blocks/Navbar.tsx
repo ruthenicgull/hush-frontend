@@ -16,9 +16,9 @@ import { selectIsAuthenticated } from "@/features/user/userSlice";
 import useLogout from "@/hooks/useLogout";
 
 const navigation: { name: string; href: string; icon: any }[] = [
-  { name: "Colleges", href: "/colleges", icon: <School size={18} /> },
-  { name: "Posts", href: "/posts", icon: <Newspaper size={18} /> },
-  { name: "Search", href: "/search", icon: <Search size={18} /> },
+  { name: "Colleges", href: "/colleges", icon: <School size={15} /> },
+  { name: "Posts", href: "/posts", icon: <Newspaper size={15} /> },
+  { name: "Search", href: "/search", icon: <Search size={15} /> },
 ];
 
 function Navbar() {
@@ -34,7 +34,7 @@ function Navbar() {
     const handleScroll = () => {
       const scrollY = window.scrollY;
       if (scrollY > 75) {
-        setBlackenStyle("bg-white dark:bg-black ");
+        setBlackenStyle("bg-white dark:bg-black");
       } else {
         setBlackenStyle("");
       }
@@ -59,14 +59,14 @@ function Navbar() {
         aria-label="Global"
         className="flex items-center justify-between px-8 py-3"
       >
-        <div className="flex lg:flex-1">
+        <div className="flex">
           <Link to="/" className="-m-1.5 p-1.5">
             <span className="font-bold text-indigo-500 dark:text-indigo-300 text-lg">
               Hush
             </span>
           </Link>
         </div>
-        <div className="flex lg:hidden">
+        <div className="flex md:hidden">
           <button
             type="button"
             onClick={() => setMobileMenuOpen(true)}
@@ -76,19 +76,22 @@ function Navbar() {
             <Menu aria-hidden="true" className="h-6 w-6" />
           </button>
         </div>
-        <nav className="hidden lg:flex lg:gap-x-12">
-          {navigation.map((item) => (
-            <Link
-              key={item.name}
-              to={item.href}
-              className="flex items-center gap-2 text-sm rounded-sm tracking-widest leading-6 text-gray-900 transition duration-200 px-2 hover:bg-black hover:text-white dark:text-gray-100 dark:hover:bg-white dark:hover:text-black"
-            >
-              <span>{item.icon}</span>
-              <span>{item.name}</span>
-            </Link>
-          ))}
-        </nav>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-4 lg:items-center">
+        <div className="hidden md:flex justify-end gap-4 items-center">
+          <nav className="flex gap-2">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                aria-label={item.name}
+                className="group flex flex-col max-w-10 items-center gap-1 text-sm rounded-sm text-gray-900 py-1 px-10 dark:text-gray-100 "
+              >
+                <span>{item.icon}</span>
+                <span className="px-2 text-xs group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition duration-200">
+                  {item.name}
+                </span>
+              </Link>
+            ))}
+          </nav>
           <ModeToggle />
           {isUserLoggedIn ? (
             <div className="flex gap-2">
