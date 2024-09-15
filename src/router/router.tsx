@@ -7,7 +7,7 @@ import Post from "../pages/Post.tsx";
 import ErrorBoundary from "@/pages/ErrorBoundary.tsx";
 import Login from "@/pages/Login.tsx";
 import SignUp from "@/pages/Signup.tsx";
-import Comment from "@/components/blocks/Comment.tsx";
+import CreatePost from "@/components/blocks/CreatePost.tsx";
 
 const router = createBrowserRouter([
   {
@@ -41,10 +41,9 @@ const router = createBrowserRouter([
       {
         path: "/test",
         element: (
-          <Comment
-            _id="test"
-            content="This is was a very good bad post, a half good, half bad, half post."
-          />
+          <div className="mt-96 flex items-center justify-center">
+            <CreatePost />
+          </div>
         ),
       },
     ],

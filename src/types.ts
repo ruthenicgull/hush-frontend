@@ -18,3 +18,7 @@ export type User = {
     name: string;
   };
 };
+export type PostFormDataType = {
+  title: string;
+  content: string;
+};
