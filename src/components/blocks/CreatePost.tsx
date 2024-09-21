@@ -15,8 +15,8 @@ import { PostFormDataType } from "@/types";
 import { useState } from "react";
 import { Loader } from "../ui/Loader";
 import axios from "@/api/axios";
-import { create } from "domain";
 import { toast } from "sonner";
+import { Plus } from "lucide-react";
 
 function CreatePost() {
   const [postFormData, setPostFormData] = useState<PostFormDataType>({
@@ -25,6 +25,7 @@ function CreatePost() {
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
   const handleInputChange = (
     event:
@@ -49,6 +50,7 @@ function CreatePost() {
         });
         toast("Post created successfully!");
         setPostFormData({ title: "", content: "" });
+        setIsDialogOpen(false); // Close the dialog after success
       } catch (error: any) {
         console.log(error);
         setError(error?.response?.data?.message || "Something went wrong!");
@@ -60,9 +62,15 @@ function CreatePost() {
   };
 
   return (
-    <Dialog>
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Create Post</Button>
+        <Button
+          variant="primary"
+          className="w-full flex gap-2"
+          onClick={() => setIsDialogOpen(true)}
+        >
+          Create Post <Plus size={16} />
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md sm:w-md dark:text-white">
         {isLoading ? (
@@ -102,7 +110,7 @@ function CreatePost() {
               <Button type="submit" onClick={handleSubmit}>
                 Post
               </Button>
-            </DialogFooter>{" "}
+            </DialogFooter>
           </>
         )}
       </DialogContent>

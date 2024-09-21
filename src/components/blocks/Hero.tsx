@@ -3,10 +3,10 @@ import BackgroundGradient from "../ui/backgroundGradient";
 
 export default function Hero() {
   return (
-    <div className="">
+    <div className="h-screen overflow-hidden">
       <div className="relative isolate px-6 pt-14 lg:px-8">
         <BackgroundGradient />
-        <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
+        <div className="mx-auto max-w-2xl py-32 sm:py-24 lg:py-56">
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
             <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 dark:text-gray-400 ring-1 ring-gray-900/10 dark:ring-gray-300 hover:ring-gray-900/20 dark:hover:ring-gray-600">
               Find posts from your college.{" "}

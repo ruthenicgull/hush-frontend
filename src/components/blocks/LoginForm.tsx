@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
 import { AuthFormDataType } from "@/types";
+import { ArrowLeft } from "lucide-react";
 
 interface LoginFormProps {
   formData: AuthFormDataType;
@@ -22,7 +23,10 @@ export function LoginForm({
   error,
 }: LoginFormProps) {
   return (
-    <div className="flex items-center justify-center bg-neutral-500 bg-opacity-20 dark:bg-black dark:bg-opacity-30 p-8 rounded-lg shadow-lg">
+    <div className="relative h-full w-full flex items-center justify-center bg-neutral-500 bg-opacity-20 dark:bg-black dark:bg-opacity-30 p-8 rounded-lg shadow-lg">
+      <Link to={"/"} className="absolute top-4 left-4">
+        <ArrowLeft />
+      </Link>
       <div className="mx-auto grid w-full gap-6">
         <div className="grid gap-2 text-center">
           <h1 className="text-3xl font-bold dark:text-white">Login</h1>

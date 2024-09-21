@@ -19,6 +19,7 @@ function CommentsList({ post_id }: CommentsListPropsType) {
       try {
         const response = await axios.get(`/comments/post/${post_id}`);
         setComments(response.data.data);
+
         console.log(response.data);
       } catch (error: any) {
         console.error(error);

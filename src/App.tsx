@@ -19,7 +19,7 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className="dark:text-white">
       <Navbar />
       <Outlet
         context={{ isUserLoggedIn: isAuthenticated } satisfies ContextType}
