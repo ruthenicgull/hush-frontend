@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 function useLogout() {
-  const [error, setError] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const accessToken = useSelector(selectAccessToken);
@@ -30,10 +30,11 @@ function useLogout() {
         error.response.data &&
         error.response.data.message
       ) {
-        setError(error.response.data.message);
-        toast(error);
+        setErrorMessage(error.response.data.message);
+        toast(errorMessage);
       } else {
-        setError("An unexpected error occurred. Please try again.");
+        setErrorMessage("An unexpected error occurred. Please try again.");
+        toast(errorMessage);
       }
       console.log("Failed to log out", error);
     }

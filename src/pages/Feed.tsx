@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import PostCard from "@/components/blocks/PostCard";
 import BackgroundGradient from "@/components/ui/backgroundGradient";
 import { Loader } from "@/components/ui/Loader";
 import CreatePost from "@/components/blocks/CreatePost";
