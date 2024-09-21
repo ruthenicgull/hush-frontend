@@ -13,7 +13,7 @@ function useLogout() {
 
   const logout = async () => {
     dispatch(logoutUser()); // Remove user data from the store
-    setError(null); // Reset error state on successful logout
+    setErrorMessage(null); // Reset error state on successful logout
     try {
       await axios.post(
         "user/logout",
