@@ -24,7 +24,7 @@ export function LoginForm({
 }: LoginFormProps) {
   return (
     <div className="relative h-full w-full flex items-center justify-center bg-neutral-500 bg-opacity-20 dark:bg-black dark:bg-opacity-30 p-8 rounded-lg shadow-lg">
-      <Link to={"/"} className="absolute top-4 left-4">
+      <Link to={"/"} className="absolute top-4 left-4 dark:text-white">
         <ArrowLeft />
       </Link>
       <div className="mx-auto grid w-full gap-6">

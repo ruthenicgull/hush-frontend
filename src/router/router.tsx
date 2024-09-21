@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "../App.tsx";
 import LearnMore from "../pages/LearnMore.tsx";
 import Landing from "../pages/Landing.tsx";
-import Posts from "../pages/Posts.tsx";
+import Feed from "../pages/Feed.tsx";
 import Post from "../pages/Post.tsx";
 import ErrorBoundary from "@/pages/ErrorBoundary.tsx";
 import Login from "@/pages/Login.tsx";
@@ -24,19 +24,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/posts",
-        element: <Posts />,
+        element: <Feed />,
       },
       {
         path: "/posts/:postId",
         element: <Post />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/signup",
-        element: <SignUp />,
       },
       {
         path: "/test",
@@ -47,6 +39,14 @@ const router = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <SignUp />,
   },
   {
     path: "*",

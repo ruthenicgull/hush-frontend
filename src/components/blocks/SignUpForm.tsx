@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
 type SignUpFormProps = {
   onFormChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -18,7 +20,10 @@ export function SignUpForm({
   error,
 }: SignUpFormProps) {
   return (
-    <div className="flex items-center justify-center bg-neutral-500 bg-opacity-20 dark:bg-black dark:bg-opacity-30 p-8 rounded-lg shadow-lg">
+    <div className="relative h-full w-full flex items-center justify-center bg-neutral-500 bg-opacity-20 dark:bg-black dark:bg-opacity-30 p-8 rounded-lg shadow-lg">
+      <Link to={"/"} className="absolute top-4 left-4">
+        <ArrowLeft />
+      </Link>
       <div className="mx-auto grid w-full gap-6">
         <div className="grid gap-2 text-center">
           <h1 className="text-3xl font-bold dark:text-white">Sign Up</h1>
@@ -60,6 +65,12 @@ export function SignUpForm({
             Sign Up
           </Button>
         </form>
+        <div className="mt-4 text-center text-sm dark:text-gray-400">
+          Already have an account?{" "}
+          <Link to="/login" className="underline dark:text-gray-300">
+            Log In
+          </Link>
+        </div>
       </div>
     </div>
   );

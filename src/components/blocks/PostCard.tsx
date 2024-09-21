@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { usePostActions } from "@/hooks/usePostActions";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   _id: string;
@@ -18,18 +19,15 @@ type Props = {
 };
 
 function PostCard({ _id, college, username, title, content, votes }: Props) {
-  const {
-    comments,
-    voteType,
-    upvotes,
-    onUpvote,
-    onDownvote,
-    onComment,
-    onShare,
-  } = usePostActions(_id);
+  const { voteType, upvotes, comments, onUpvote, onDownvote, onShare } =
+    usePostActions(_id);
+  const navigate = useNavigate();
 
   return (
-    <div className="flex gap-4 bg-gray-500 bg-opacity-15 hover:bg-opacity-30 shadow-sm border border-gray-300 hover:border-gray-500 dark:border-gray-700 dark:hover:border-gray-500 rounded-xl p-4 m-4 items-start max-w-2xl cursor-default">
+    <div
+      className="flex gap-4 bg-gray-500 bg-opacity-15 hover:bg-opacity-30 shadow-sm border border-gray-300 hover:border-gray-500 dark:border-gray-700 dark:hover:border-gray-500 rounded-xl p-4 items-start cursor-default"
+      onClick={() => navigate(`/posts/${_id}`)}
+    >
       <div className="rounded-full text-gray-900 dark:text-white">
         {college?.slice(0, 2).toUpperCase()}
       </div>
@@ -44,11 +42,14 @@ function PostCard({ _id, college, username, title, content, votes }: Props) {
           <p className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
             {title}
           </p>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            {content.length > 100 ? content.slice(0, 100) + "..." : content}
+          <p className="text-sm text-gray-700 dark:text-gray-300">
+            {content.length > 300 ? content.slice(0, 300) + "..." : content}
           </p>
         </div>
-        <div className="flex justify-between flex-wrap pt-2">
+        <div
+          className="flex justify-between flex-wrap pt-2"
+          onClick={(e) => e.stopPropagation()}
+        >
           <div className="flex items-center space-x-4 text-xs">
             <button
               className="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white"
@@ -73,13 +74,13 @@ function PostCard({ _id, college, username, title, content, votes }: Props) {
                 }`}
               />
             </button>
-            <button
+            <Link
               className="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white"
-              onClick={onComment}
+              to={`/posts/${_id}`}
             >
               <MessageSquare className="w-4 h-4 mr-1" />
-              <span>{comments.length}</span>
-            </button>
+              <span>{comments}</span>
+            </Link>
             <button
               className="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white"
               onClick={onShare}

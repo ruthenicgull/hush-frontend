@@ -9,6 +9,7 @@ import useDebounce from "./useDebounce";
 export function usePostActions(postId: string) {
   const [voteType, setVoteType] = useState<VoteType>("none");
   const [upvotes, setUpvotes] = useState<number>(0); // No longer initialized with props, fetched from API
+  const [comments, setComments] = useState<number>(0);
   const [pendingVote, setPendingVote] = useState<VoteType | null>(null);
 
   const isAuthenticated = useSelector(selectIsAuthenticated);
@@ -20,8 +21,12 @@ export function usePostActions(postId: string) {
     async function fetchData() {
       try {
         // Fetch the initial vote count
-        const votesResponse = await axios.get(`/vote/post/count/${postId}`);
+        const votesResponse = await axios.get(`vote/post/count/${postId}`);
         setUpvotes(votesResponse.data.data);
+
+        // Fetch comments
+        const postComments = await axios.get(`comments/post/${postId}`);
+        setComments(postComments.data.data?.length || 0);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -67,7 +72,7 @@ export function usePostActions(postId: string) {
         );
       }
 
-      if (response.status === 200) {
+      if (response.status >= 200 && response.status <= 299) {
         // Fetch updated vote count after voting
         const votesResponse = await axios.get(`/vote/post/count/${postId}`);
         setUpvotes(votesResponse.data.data);
@@ -97,6 +102,7 @@ export function usePostActions(postId: string) {
   }
 
   return {
+    comments,
     voteType,
     upvotes,
     onUpvote,

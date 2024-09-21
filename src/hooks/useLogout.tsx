@@ -3,6 +3,7 @@ import { logoutUser, selectAccessToken } from "@/features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 function useLogout() {
   const [error, setError] = useState<string | null>(null);
@@ -30,6 +31,7 @@ function useLogout() {
         error.response.data.message
       ) {
         setError(error.response.data.message);
+        toast(error);
       } else {
         setError("An unexpected error occurred. Please try again.");
       }
@@ -37,7 +39,7 @@ function useLogout() {
     }
   };
 
-  return [logout, error] as const;
+  return logout;
 }
 
 export default useLogout;

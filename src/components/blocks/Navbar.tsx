@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import { selectIsAuthenticated } from "@/features/user/userSlice";
 import useLogout from "@/hooks/useLogout";
+import { useLocation } from "react-router-dom";
 
 const navigation: { name: string; href: string; icon: any }[] = [
   { name: "Colleges", href: "/colleges", icon: <School size={15} /> },
@@ -27,10 +28,10 @@ function Navbar() {
     selectIsAuthenticated(state)
   );
   const [blackenStyle, setBlackenStyle] = useState("");
-  const [logout, error] = useLogout();
+  const logout = useLogout();
+  const currentPath = useLocation().pathname;
 
   useEffect(() => {
-    // check if user has scrolled a certain amount
     const handleScroll = () => {
       const scrollY = window.scrollY;
       if (scrollY > 75) {
@@ -41,11 +42,10 @@ function Navbar() {
     };
 
     window.addEventListener("scroll", handleScroll);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  });
+  }, []);
 
   const handleLinkClick = () => {
     setMobileMenuOpen(false);
@@ -83,12 +83,15 @@ function Navbar() {
                 key={item.name}
                 to={item.href}
                 aria-label={item.name}
-                className="group flex flex-col max-w-10 items-center gap-1 text-sm rounded-sm text-gray-900 py-1 px-10 dark:text-gray-100 "
+                onClick={handleLinkClick}
+                className={`flex flex-col max-w-10 items-center gap-1 text-xs rounded-md text-gray-900 py-1 px-10 dark:text-gray-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 ${
+                  currentPath === item.href
+                    ? "bg-neutral-200 dark:bg-neutral-700"
+                    : ""
+                }`}
               >
                 <span>{item.icon}</span>
-                <span className="px-2 text-xs group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition duration-200">
-                  {item.name}
-                </span>
+                <span>{item.name}</span>
               </Link>
             ))}
           </nav>
@@ -122,6 +125,7 @@ function Navbar() {
           )}
         </div>
       </nav>
+
       {/* Sidebar */}
       <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
         <SheetContent aria-describedby={undefined}>
@@ -143,7 +147,9 @@ function Navbar() {
                     key={item.name}
                     to={item.href}
                     onClick={handleLinkClick}
-                    className="-mx-3 flex gap-2 items-center rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800"
+                    className={`-mx-3 flex gap-2 items-center rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800 ${
+                      currentPath === item.href ? "bg-gray-200" : ""
+                    }`}
                   >
                     <span>{item.icon}</span>
                     <span>{item.name}</span>
@@ -185,7 +191,7 @@ function Navbar() {
           </div>
         </SheetContent>
       </Sheet>
-      {/* Sidebar End*/}
+      {/* Sidebar End */}
     </header>
   );
 }
