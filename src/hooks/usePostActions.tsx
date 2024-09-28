@@ -57,6 +57,7 @@ export function usePostActions(postId: string) {
       toast.error("Login to vote");
       return;
     }
+    setVoteType(newVoteType);
 
     const endpoint = `vote/post/${postId}`;
 
