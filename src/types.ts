@@ -22,3 +22,11 @@ export type PostFormDataType = {
   title: string;
   content: string;
 };
+export type PostType = {
+  _id: string;
+  college: string;
+  owner: string;
+  title: string;
+  content: string;
+  votes: number;
+};

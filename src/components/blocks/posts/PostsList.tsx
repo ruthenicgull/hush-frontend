@@ -1,20 +1,8 @@
 import PostCard from "@/components/blocks/PostCard"; // Adjust the import based on your file structure
-
-interface Post {
-  _id: string;
-  college: {
-    name: string;
-  };
-  owner: {
-    username: string;
-  };
-  title: string;
-  content: string;
-  votes: number;
-}
+import { PostType } from "@/types";
 
 interface PostsListProps {
-  posts: Post[];
+  posts: PostType[];
 }
 
 function PostsList({ posts }: PostsListProps) {
@@ -24,11 +12,10 @@ function PostsList({ posts }: PostsListProps) {
         <PostCard
           key={post._id}
           _id={post._id}
-          college={post.college.name}
-          username={post.owner.username}
+          college={post.college}
+          username={post.owner}
           title={post.title}
           content={post.content}
-          votes={post.votes}
         />
       ))}
     </>

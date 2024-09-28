@@ -15,10 +15,10 @@ type Props = {
   username: string;
   title: string;
   content: string;
-  votes: number; // Just pass this as initial state
+  // votes: number; // Just pass this as initial state
 };
 
-function PostCard({ _id, college, username, title, content, votes }: Props) {
+function PostCard({ _id, college, username, title, content }: Props) {
   const { voteType, upvotes, comments, onUpvote, onDownvote, onShare } =
     usePostActions(_id);
   const navigate = useNavigate();
