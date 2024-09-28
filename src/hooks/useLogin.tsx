@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import axios from "@/api/axios";
 import { setUser } from "@/features/user/userSlice";
 import { AuthFormDataType } from "@/types";
+import { useNavigate } from "react-router-dom";
+import { userInfo } from "node:os";
 
 function useLogin() {
   const [formData, setFormData] = useState<AuthFormDataType>({
@@ -14,6 +16,7 @@ function useLogin() {
   const [error, setError] = useState<string | null>(null);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function onFormChange(event: React.ChangeEvent<HTMLInputElement>) {
     setFormData({ ...formData, [event.target.id]: event.target.value });
@@ -43,6 +46,11 @@ function useLogin() {
         })
       );
       setIsLoggedIn(true);
+      if (response?.data?.data?.user?._id) {
+        navigate(`/user/${response?.data?.data?.user?._id}`);
+      } else {
+        navigate(`/`);
+      }
     } catch (error: any) {
       if (
         error.response &&

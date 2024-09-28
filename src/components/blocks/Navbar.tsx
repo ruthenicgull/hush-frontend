@@ -11,8 +11,7 @@ import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSelector } from "react-redux";
-import { RootState } from "@/app/store";
-import { selectIsAuthenticated } from "@/features/user/userSlice";
+import { selectIsAuthenticated, selectUserId } from "@/features/user/userSlice";
 import useLogout from "@/hooks/useLogout";
 import { useLocation } from "react-router-dom";
 
@@ -24,9 +23,8 @@ const navigation: { name: string; href: string; icon: any }[] = [
 
 function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const isUserLoggedIn = useSelector((state: RootState) =>
-    selectIsAuthenticated(state)
-  );
+  const isUserLoggedIn = useSelector(selectIsAuthenticated);
+  const userId = useSelector(selectUserId);
   const [blackenStyle, setBlackenStyle] = useState("");
   const logout = useLogout();
   const currentPath = useLocation().pathname;
@@ -97,7 +95,7 @@ function Navbar() {
           </nav>
           <ModeToggle />
           {isUserLoggedIn ? (
-            <div className="flex gap-2">
+            <Link to={`/user/${userId}`} className="flex gap-2">
               <Avatar>
                 <AvatarImage
                   src="https://github.com/shadcn.png"
@@ -108,7 +106,7 @@ function Navbar() {
               <Button onClick={logout} variant={"destructive"}>
                 Logout
               </Button>
-            </div>
+            </Link>
           ) : (
             <div className="flex gap-2">
               <Link to={"/login"}>

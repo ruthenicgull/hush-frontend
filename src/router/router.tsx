@@ -7,7 +7,7 @@ import Post from "../pages/Post.tsx";
 import ErrorBoundary from "@/pages/ErrorBoundary.tsx";
 import Login from "@/pages/Login.tsx";
 import SignUp from "@/pages/Signup.tsx";
-import CreatePost from "@/components/blocks/CreatePost.tsx";
+import Profile from "@/pages/Profile.tsx";
 
 const router = createBrowserRouter([
   {
@@ -31,12 +31,12 @@ const router = createBrowserRouter([
         element: <Post />,
       },
       {
+        path: "/user/:userId",
+        element: <Profile />,
+      },
+      {
         path: "/test",
-        element: (
-          <div className="mt-96 flex items-center justify-center">
-            <CreatePost />
-          </div>
-        ),
+        element: <div className=""></div>,
       },
     ],
   },
